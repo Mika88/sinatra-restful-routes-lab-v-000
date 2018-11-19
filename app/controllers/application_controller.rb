@@ -28,4 +28,17 @@ class ApplicationController < Sinatra::Base
     @recipe.delete
     redirect to '/recipes'
   end
+
+  get '/articles/:id/edit' do  #load edit form
+    @article = Article.find_by_id(params[:id])
+    erb :edit
+  end
+ 
+  patch '/recipes/:id' do
+    @recipe = Recipe.find_by_id(params[:id])
+    @recipe.name = params[:name]
+    @recipe.ingredients = params[:ingredients]
+    @recipe.save
+    redirect to "/recipes/#{@recipe.id}"
+  end
 end
